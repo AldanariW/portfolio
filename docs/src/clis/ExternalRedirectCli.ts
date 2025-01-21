@@ -9,6 +9,10 @@ export class RedirectCli extends Cli implements IExecutable {
         this.url = url;
     }
 
+    public output(): string {
+        return `Opening ${this.name}...`;
+    }
+
     public execute(): any {
         window.open(this.url, '_blank')?.focus();
     }

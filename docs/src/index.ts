@@ -14,4 +14,12 @@ $(() => {
     clis.push(new CommandListCli(clis));
 
     new ShellInterface(...clis);
+
+    // evil code that force focus on the text input
+    const input = $('#command-input');
+    $('body').on('mouseup', () => {
+        setTimeout(() => {
+            input.trigger('focus');
+        }, 0);
+    });
 });

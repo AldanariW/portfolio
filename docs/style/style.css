@@ -1,21 +1,19 @@
 body {
-    background-color: #1e1e1e;
+    background-color: #000;
     color: #fff;
     font-family: monospace;
+    font-size: 16px;
     margin: 0;
-    padding: 20px;
+    height: 100vw;
 }
 
 #terminal {
-    background-color: #000;
     border-radius: 5px;
     padding: 20px;
-    height: 400px;
     overflow-y: auto;
 }
 
 #output {
-    /*display: inline-grid;*/
     margin-bottom: 10px;
     white-space: pre-wrap;
 }
