@@ -41,3 +41,8 @@ body {
     flex-grow: 1;
     outline: none;
 }
+
+.animation {
+    display: inline;
+    margin: 0;
+}

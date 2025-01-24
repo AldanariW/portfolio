@@ -46,7 +46,14 @@ export class ShellInterface {
         });
     }
 
+    private addLine = (line: string, err: string) => {
+        this.$output.append(`<span class="prompt">$</span><span class="${err}">${line}</span><br>`);
+        this.$terminal.scrollTop(this.$terminal[0].scrollHeight);
+        this.$input.val('');
+    }
+
     private handleCommand(): void {
+
         const command = this.$input.val() as string;
 
         if (command.trim()) {
@@ -55,7 +62,9 @@ export class ShellInterface {
             this.history.currentIndex = this.history.commands.length;
 
             // parses the command
-            const cli = this.clis.find((c: Cli) => command.startsWith(c.name));
+            const cli = this.clis.find((c: Cli) =>
+                command.slice(0, command.indexOf(' ') + 1 || undefined).trim() === c.name
+            );
 
             let output: string;
             let err = ''
@@ -65,7 +74,7 @@ export class ShellInterface {
                 err = 'err'
             } else {
                 const res = cli.parseArgs(command);
-                if (!res) {
+                if (res && res !== true) {
                     output = res as string;
                     err = 'err'
                 } else {
@@ -74,13 +83,14 @@ export class ShellInterface {
             }
 
             // prints the result of the command
-            this.$output.append(`<span class="prompt">$</span><span class="${err}">${output}</span><br>`);
-            this.$terminal.scrollTop(this.$terminal[0].scrollHeight);
-            this.$input.val('');
+            this.addLine(output, err)
 
             // execute the command
-            if (isExecutable(cli)) {
-                cli.execute()
+            if (err.length === 0 && isExecutable(cli)) {
+                const res = cli.execute()
+                if (res && res !== true) {
+                    this.addLine(res, 'err')
+                }
             }
         }
     }
