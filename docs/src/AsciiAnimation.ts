@@ -1,14 +1,3 @@
-/*
-	usage: ASCIIAnimation(param1, param2, param3)
-
-	param1 - array of animation 'frames' (strings)
-	param2 - speed of animation in ms
-	param3 - DOM target, inserts animation to .innerHTML (retains spaces)
-
-	ex:
-	var anim1 = new ASCIIAnimation(["1","2","3"], 100, div1);
-*/
-
 export class ASCIIAnimation {
     private readonly frames: string[]
     private readonly speed: number;

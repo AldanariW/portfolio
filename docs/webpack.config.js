@@ -12,6 +12,10 @@ module.exports = {
         ],
     },
     resolve: {
+        alias: {
+            Content: path.resolve(__dirname, 'content'),
+            Clis: path.resolve(__dirname, 'src/clis'),
+        },
         extensions: ['.tsx', '.ts', '.js'],
     },
     output: {

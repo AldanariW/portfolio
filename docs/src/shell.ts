@@ -1,5 +1,6 @@
 import {Cli} from "./clis/Cli";
 import {isExecutable} from "./clis/IExecutable";
+import {CommandParser} from "./CommandParser";
 
 
 interface CommandHistory {
@@ -46,7 +47,26 @@ export class ShellInterface {
         });
     }
 
-    private addLine = (line: string, err: string) => {
+    private navigateHistory(direction: 'up' | 'down'): void {
+        if (this.history.commands.length === 0) return;
+
+        if (direction === 'up') {
+            if (this.history.currentIndex > 0) {
+                this.history.currentIndex--;
+                this.$input.val(this.history.commands[this.history.currentIndex]);
+            }
+        } else {
+            if (this.history.currentIndex < this.history.commands.length - 1) {
+                this.history.currentIndex++;
+                this.$input.val(this.history.commands[this.history.currentIndex]);
+            } else {
+                this.history.currentIndex = this.history.commands.length;
+                this.$input.val('');
+            }
+        }
+    }
+
+    private addLine(line: string, err: string): void {
         this.$output.append(`<span class="prompt">$</span><span class="${err}">${line}</span><br>`);
         this.$terminal.scrollTop(this.$terminal[0].scrollHeight);
         this.$input.val('');
@@ -62,9 +82,7 @@ export class ShellInterface {
             this.history.currentIndex = this.history.commands.length;
 
             // parses the command
-            const cli = this.clis.find((c: Cli) =>
-                command.slice(0, command.indexOf(' ') + 1 || undefined).trim() === c.name
-            );
+            const cli = this.clis.find((c: Cli) => CommandParser.parseName(command) === c.name);
 
             let output: string;
             let err = ''
@@ -95,22 +113,4 @@ export class ShellInterface {
         }
     }
 
-    private navigateHistory(direction: 'up' | 'down'): void {
-        if (this.history.commands.length === 0) return;
-
-        if (direction === 'up') {
-            if (this.history.currentIndex > 0) {
-                this.history.currentIndex--;
-                this.$input.val(this.history.commands[this.history.currentIndex]);
-            }
-        } else {
-            if (this.history.currentIndex < this.history.commands.length - 1) {
-                this.history.currentIndex++;
-                this.$input.val(this.history.commands[this.history.currentIndex]);
-            } else {
-                this.history.currentIndex = this.history.commands.length;
-                this.$input.val('');
-            }
-        }
-    }
 }
