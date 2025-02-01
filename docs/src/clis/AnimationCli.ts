@@ -1,53 +1,70 @@
-import {Cli} from "./Cli";
+import {Cli} from "./def/Cli";
 import {ASCIIAnimation} from "../AsciiAnimation";
-import {IExecutable} from "./IExecutable";
+import {IExecutable} from "./def/IExecutable";
+import {ArgValidator} from "./def/ArgValidator"
 import data from "../../content/animations.json"
 
 export class AnimationCli extends Cli implements IExecutable {
     public availableAnimations: string[];
     private animations: Map<number, ASCIIAnimation>;
     private currentId: number | undefined;
+    protected validator: ArgValidator;
 
     constructor() {
         super('anim', 'an animation', () => '');
         this.animations = new Map();
-        this.availableAnimations = Object(data);
+        this.availableAnimations = Object.keys(data);
+        this.validator = new ArgValidator([
+            {
+                name: 'animation',
+                alias: 'a',
+                description: "The name of the animation",
+                type: 'string',
+                required: true,
+            },
+            {
+                name: 'time',
+                alias: 't',
+                description: "The time between animation frames, a lower time means a faster animation",
+                type: 'number',
+                required: false,
+            }
+        ])
     }
 
     public output(): string {
+        if (this.args.has('help')) return this.help() + `\n\nAvailable animations : ${this.availableAnimations.join(', ')}`;
+
         this.currentId = Date.now();
         return `<pre class="animation" id="${this.currentId}"></pre>`;
     }
 
-    public execute(...args: string[]): any {
+    public execute(): {succes: boolean, errors: string} {
         if (this.currentId === undefined) {
-            return 'Animation failt to start, cause: Id is undefined at the time of animation instanciation'
+            return {succes: false, errors: 'Animation failed to start, cause: Id is undefined at the time of animation instanciation'}
         }
-        let animName = this.args[0] as keyof typeof data;
+        let animName = this.validator.getArg("a") as keyof typeof data;
         try {
-            let animation = new ASCIIAnimation(data[animName], parseInt(this.args[1] ?? '100'), this.currentId.toString());
+            const time = this.validator.getArg("t") as number ?? 100;
+            let animation = new ASCIIAnimation(data[animName], time, this.currentId.toString());
             animation.start()
             this.animations.set(this.currentId, animation);
         } catch (e) {
-            return 'Animation failed to start, cause: ' + e;
+            return {succes: false, errors: 'Animation failed to start, cause: ' + e}
         }
-        return true;
+        return {succes: true, errors: ""};
     }
 
-    public parseArgs(args: string): boolean | string {
-        let argArray = args.split(' -').slice(1).map(x => x.trim());
-        if (argArray.length === 0) {
-            return `Command 'anim' requires at least one argument, found 0`;
+    public parseArgs(args: string): {succes: boolean, errors: string, follow: boolean} {
+        const res = super.parseArgs(args);
+        if (!res.succes) return res;
+
+        const isHelpCommand = this.validator.getArg('help') !== undefined;
+        const animName = this.validator.getArg("a") as string;
+        if (!isHelpCommand && !this.availableAnimations.includes(animName)) {
+            return {succes: false, errors: `animation '${animName}' is not a valid animation, type 'anim -help' to see the list of animations.`, follow: false}
         }
-        const invalidArgs = argArray.filter(x => !x.match(/^[at] \S+$/g))// TODO write real arg parser
-        if (invalidArgs.length > 0) {
-            return `Unknown arg: ${invalidArgs.join(" ")}`;
-        }
-        argArray = argArray.map(x => x.split(' ', 2)[1])
-        if (!(argArray[0] in this.availableAnimations)) {
-            return `animation '${argArray[0]}' is unknowed`;
-        }
-        this.args = argArray;
-        return true
+
+        return {succes: true, errors: "", follow: !isHelpCommand}
     }
 }

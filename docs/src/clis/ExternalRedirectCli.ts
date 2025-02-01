@@ -1,8 +1,8 @@
-import {Cli} from './Cli';
-import {IExecutable} from "./IExecutable";
+import {Cli} from './def/Cli';
+import {IExecutable} from "./def/IExecutable";
 
 export class RedirectCli extends Cli implements IExecutable {
-    private url: string;
+    private readonly url: string;
 
     constructor(name: string, url: string, help: string) {
         super(name, help);
@@ -10,10 +10,17 @@ export class RedirectCli extends Cli implements IExecutable {
     }
 
     public output(): string {
+        if (this.args.has('help')) return this.help();
+
         return `Opening ${this.name}...`;
     }
 
-    public execute(): any {
-        window.open(this.url, '_blank')?.focus();
+    public execute(): { succes: boolean, errors: string } {
+        const succes = window.open(this.url, '_blank');
+        if (succes !== null) {
+            succes.focus()
+            return {succes: true, errors: ""};
+        }
+        return {succes: false, errors: "L'ouverture du lien a échoué, la nouvelle fenetre a été bloqué par l'utilisateur"};
     }
 }

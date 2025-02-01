@@ -1,4 +1,4 @@
-import {Cli} from "./Cli";
+import {Cli} from "./def/Cli";
 
 export class CommandListCli extends Cli {
     private cliInstances: Cli[];
@@ -10,13 +10,7 @@ export class CommandListCli extends Cli {
 
     private listCommands(): string {
         return `Command List :\n - ${this.cliInstances
-            .map(cli => `${cli.name}: ${cli.help}`)
+            .map(cli => `${cli.name}: ${cli.desc}`)
             .join('\n - ')}`
-    }
-
-    public parseArgs(args: string): boolean | string {
-        // No args needed for this command
-        this.args = [];
-        return true;
     }
 }

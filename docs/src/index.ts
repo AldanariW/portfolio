@@ -1,18 +1,20 @@
-// Initialize when document is ready
 import {ShellInterface} from "./shell";
-import {Cli} from "./clis/Cli";
+import {Cli} from "./clis/def/Cli";
 import {RedirectCli} from "./clis/ExternalRedirectCli";
 import {TestCli} from "./clis/TestCli";
 import {CommandListCli} from "./clis/CommandListCli";
 import {AnimationCli} from "./clis/AnimationCli";
 import {ContentCli, hidePane} from "./clis/ContentCli";
 
+const contentDir = "content";
+
+
 $(() => {
     const clis: Cli[] = [
         new RedirectCli("github", "https://github.com/AldanariP", "Just type 'github' to open the github profile in the new tab"),
         new TestCli(),
         new AnimationCli(),
-        new ContentCli("lorem", "a test modal pane", "content/lorem_ipsum.html")
+        new ContentCli("lorem", "a test modal pane", `${contentDir}/lorem_ipsum.html`)
     ];
 
     clis.push(new CommandListCli(clis));

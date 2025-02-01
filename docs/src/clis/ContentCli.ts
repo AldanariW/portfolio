@@ -1,4 +1,4 @@
-import {Cli} from './Cli';
+import {Cli} from './def/Cli';
 
 let $pane: JQuery
 let $modal: JQuery
@@ -18,11 +18,11 @@ export class ContentCli extends Cli {
         this.content = content;
     }
 
-    public execute(): any {
+    public execute(): {succes: boolean, errors: string} {
         setContent('<div id="loading-div">Loading...</div>')
         showPane()
 
-        let result: string | boolean = true;
+        let result = "";
 
         $.ajax({
             url: this.content,
@@ -34,7 +34,7 @@ export class ContentCli extends Cli {
             }
         })
 
-        return result;
+        return {succes: result.length == 0, errors: result};
     }
 }
 

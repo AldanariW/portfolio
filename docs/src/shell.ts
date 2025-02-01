@@ -1,5 +1,5 @@
-import {Cli} from "./clis/Cli";
-import {isExecutable} from "./clis/IExecutable";
+import {Cli} from "./clis/def/Cli";
+import {isExecutable} from "./clis/def/IExecutable";
 import {CommandParser} from "./CommandParser";
 
 
@@ -34,6 +34,7 @@ export class ShellInterface {
             switch (e.key) {
                 case 'Enter':
                     this.handleCommand();
+                    this.$terminal.scrollTop(this.$terminal[0].scrollHeight);
                     break;
                 case 'ArrowUp':
                     e.preventDefault();
@@ -61,20 +62,17 @@ export class ShellInterface {
                 this.$input.val(this.history.commands[this.history.currentIndex]);
             } else {
                 this.history.currentIndex = this.history.commands.length;
-                this.$input.val('');
             }
         }
     }
 
-    private addLine(line: string, err: string): void {
-        this.$output.append(`<span class="prompt">$</span><span class="${err}">${line}</span><br>`);
-        this.$terminal.scrollTop(this.$terminal[0].scrollHeight);
-        this.$input.val('');
-    }
-
     private handleCommand(): void {
+        const addLine = (line: string, err: string): void => {
+            this.$output.append(`<span class="prompt">$</span><span>${command}</span><br><span class="${err}">${line}</span><br>`);
+        }
 
         const command = this.$input.val() as string;
+        this.$input.val('');
 
         if (command.trim()) {
             // adds the commands to history
@@ -84,33 +82,22 @@ export class ShellInterface {
             // parses the command
             const cli = this.clis.find((c: Cli) => CommandParser.parseName(command) === c.name);
 
-            let output: string;
-            let err = ''
-
             if (cli === undefined) {
-                output = `Commmande inconnue: ${command}`;
-                err = 'err'
+                addLine(`Commmande inconnue: ${command}`, 'err')
             } else {
                 const res = cli.parseArgs(command);
-                if (res && res !== true) {
-                    output = res as string;
-                    err = 'err'
-                } else {
-                    output = cli.output();
-                }
-            }
 
-            // prints the result of the command
-            this.addLine(output, err)
+                // prints the result of the command
+                addLine(res.succes ? cli.output() : res.errors, !res.succes ? 'err': '')
 
-            // execute the command
-            if (err.length === 0 && isExecutable(cli)) {
-                const res = cli.execute()
-                if (res && res !== true) {
-                    this.addLine(res, 'err')
+                // execute the command
+                if (res.succes && res.follow && isExecutable(cli)) {
+                    const res = cli.execute()
+                    if (!res.succes) {
+                        addLine(res.errors, 'err')
+                    }
                 }
             }
         }
     }
-
 }

@@ -1,7 +1,7 @@
 import {Cli} from "./Cli";
 
 export interface IExecutable {
-    execute(...args: string[]): any;
+    execute(): { succes: boolean, errors: string };
 }
 
 export function isExecutable(object: Cli | undefined): object is Cli & IExecutable {
