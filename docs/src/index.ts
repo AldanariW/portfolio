@@ -12,9 +12,10 @@ const contentDir = "content";
 $(() => {
     const clis: Cli[] = [
         new RedirectCli("github", "https://github.com/AldanariP", "Just type 'github' to open the github profile in the new tab"),
-        new TestCli(),
-        new AnimationCli(),
-        new ContentCli("lorem", "a test modal pane", `${contentDir}/lorem_ipsum.html`)
+        // new TestCli(),
+        // new AnimationCli(),
+        // new ContentCli("lorem", "a test modal pane", `${contentDir}/lorem_ipsum.html`),
+        new ContentCli("competences", "Mes competences acquisent lors de mon B.U.T. Informatique", `${contentDir}/competences_pn.html`),
     ];
 
     clis.push(new CommandListCli(clis));

@@ -34,7 +34,7 @@ export class ContentCli extends Cli {
             }
         })
 
-        return {succes: result.length == 0, errors: result};
+        return {succes: result.length === 0, errors: result};
     }
 }
 

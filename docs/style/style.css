@@ -1,3 +1,15 @@
+:root {
+    --alpha-light: 0.3;
+    --alpha-full: 1;
+
+    --red: 255, 0, 0;
+    --orange: 255, 150, 0;
+    --yellow: 255, 255, 0;
+    --green: 0, 255, 0;
+    --blue: 0, 0, 255;
+    --white: 255, 255, 255;
+}
+
 body {
     background-color: #000;
     color: #fff;
@@ -7,6 +19,7 @@ body {
     height: 100vw;
 }
 
+/* TERMINAL ELEMENTS */
 #terminal {
     border-radius: 5px;
     padding: 20px;
@@ -47,6 +60,7 @@ body {
     margin: 0;
 }
 
+/* MODAL ELEMENTS */
 .modal-overlay {
     display: none;
     position: fixed;
@@ -77,6 +91,7 @@ body {
     text-align: justify;
     margin: 0;
     white-space: preserve-breaks;
+    word-spacing: normal;
 }
 
 .close-button {
@@ -92,4 +107,56 @@ body {
 
 .body-fixed {
     overflow: hidden;
+}
+
+
+/* COMPETENCES TABLE ELEMENTS */
+/* Light colors */
+.lr {
+    color: rgba(var(--red), var(--alpha-light));
+}
+
+.lo {
+    color: rgba(var(--orange), var(--alpha-light));
+}
+
+.ly {
+    color: rgba(var(--yellow), var(--alpha-light));
+}
+
+.lg {
+    color: rgba(var(--green), var(--alpha-light));
+}
+
+.lb {
+    color: rgba(var(--blue), var(--alpha-light));
+}
+
+.lw {
+    color: rgba(var(--white), var(--alpha-light));
+}
+
+/* Full opacity colors */
+.r {
+    color: rgba(var(--red), var(--alpha-full));
+}
+
+.o {
+    color: rgba(var(--orange), var(--alpha-full));
+}
+
+.y {
+    color: rgba(var(--yellow), var(--alpha-full));
+}
+
+.g {
+    color: rgba(var(--green), var(--alpha-full));
+}
+
+.b {
+    color: rgba(var(--blue), var(--alpha-full));
+}
+
+.w {
+    color: rgba(var(--white), var(--alpha-full));
 }
