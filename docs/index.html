@@ -11,16 +11,20 @@
     <script src="./dist/bundle.js"></script>
 </head>
 <body>
-<div id="terminal">
-    <div id="output">Welcome to Rafael's Shell !<br>Hint: type 'help' to see the available options<br></div>
-    <div class="input-line">
-        <label class="prompt" for="command-input">$</label>
-        <input type="text" id="command-input" autofocus placeholder="Enter command...">
+<div id="wrapper">
+    <div id="boot-sequence"></div>
+    <div id="name" hidden></div>
+    <div id="terminal" hidden>
+        <div id="output">Welcome to Aldanari's Shell !<br>Hint: type 'help' to see the available options<br></div>
+        <div class="input-line">
+            <label class="prompt" for="command-input">$</label>
+            <input type="text" id="command-input" autofocus placeholder="Enter command...">
+        </div>
     </div>
-</div>
-<div class="modal-overlay">
-    <div class="modal-pane">
-        <button class="close-button">&times;</button>
+    <div class="modal-overlay">
+        <div class="modal-pane">
+            <button class="close-button">&times;</button>
+        </div>
     </div>
 </div>
 </body>
