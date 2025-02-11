@@ -13,8 +13,8 @@ $(async () => {
     const bootSequenceWait = showBootSequence()
 
     const clis: Cli[] = [
-        new RedirectCli("github", "https://github.com/AldanariP", "Pour être redirigé vers ma page GitHub où tous mes projets personels publiques sont hebergés."),
-        new RedirectCli("mail", "mailto:curylorafael945@gmail.com?body=Je veux vous embaucher !", "Pour m'écrire un email"),
+        new RedirectCli("github", "https://github.com/AldanariP", "Pour être redirigé vers ma page GitHub où tous mes projets personels publiques sont hebergés"),
+        new RedirectCli("mail", "mailto:curylorafael945@gmail.com?body=Je veux vous embaucher !", "Pour m'écrire un e-mail"),
         new RedirectCli("cv", `${contentDir}/cv.pdf`, "Ouvre mon CV dans un nouvel onglet"),
         // new TestCli(),
         // new AnimationCli(),
