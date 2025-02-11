@@ -16,7 +16,7 @@ export class ArgValidator {
         const argCounts = (args: ArgDefinition[], field: 'name' | 'alias') =>
             Array.from(
                 args.reduce((counts, arg) =>
-                        arg[field] ? counts.set(arg[field], (counts.get(arg[field]) || 0) + 1) : counts,
+                        arg[field] ? counts.set(<string>arg[field], (counts.get(<string>arg[field]) || 0) + 1) : counts,
                     new Map<string, number>()))
                 .filter(([_, count]) => count > 1)
                 .map(([name, _]) => name);
@@ -57,12 +57,12 @@ export class ArgValidator {
             const argDef = this.schema.get(key);
 
             if (!argDef) {
-                errors.add(`Unknown argument: ${key}`);
+                errors.add(`Argument inconnu: ${key}`);
                 continue;
             }
 
             if (typeof value !== argDef.type) {
-                errors.add(`Invalid type for ${argDef.name}: expected ${argDef.type}, got ${typeof value}`);
+                errors.add(`Type invalide pour l'argument ${argDef.name}, type attendu: ${argDef.type}, type reçu ${typeof value}`);
             }
 
             if (argDef.required) {
@@ -75,7 +75,7 @@ export class ArgValidator {
 
         for (const [name, argDef] of this.schema.entries()) {
             if (argDef.required && !seenRequiredArgs.has(name)) {
-                errors.add(`Missing required argument: ${argDef.name}`);
+                errors.add(`Argument requis manquant: ${argDef.name}`);
             }
         }
 
@@ -99,7 +99,7 @@ export class ArgValidator {
         return Array.from(new Set(this.schema.values()))
             .map(arg => {
                 const aliasText = arg.alias ? ` (-${arg.alias})` : '';
-                const requiredText = arg.required ? ' [required]' : '';
+                const requiredText = arg.required ? ' [requis]' : '';
                 return `--${arg.name}${aliasText}${requiredText}: ${arg.description}\n  Type: ${arg.type}`;
             })
             .join('\n\n');

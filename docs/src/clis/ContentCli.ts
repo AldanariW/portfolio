@@ -21,7 +21,7 @@ export class ContentCli extends Cli {
     }
 
     public execute(): {succes: boolean, errors: string} {
-        setContent('<div id="loading-div">Loading...</div>')
+        setContent('<div id="loading-div">Chargement du contenu...</div>')
         showPane()
 
         let result = "";
@@ -32,7 +32,7 @@ export class ContentCli extends Cli {
             success: (html: string) => setContent(html),
             error: () => {
                 hidePane()
-                result = `failed to load content : ${this.content}`;
+                result = `Echec du chargement du contenu: ${this.content}`;
             }
         })
 

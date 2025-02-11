@@ -4,7 +4,7 @@ export class CommandListCli extends Cli {
     private cliInstances: Cli[];
 
     constructor(cliInstances: Cli[]) {
-        super('help', 'Lists all available commands', () => this.listCommands());
+        super('help', 'Affiche la liste des commandes disponible', () => this.listCommands());
         this.cliInstances = cliInstances;
     }
 

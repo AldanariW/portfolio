@@ -11,7 +11,6 @@ const contentDir = "content";
 $(async () => {
 
     const bootSequenceWait = showBootSequence()
-    $('#terminal').show()
 
     const clis: Cli[] = [
         new RedirectCli("github", "https://github.com/AldanariP", "Pour être redirigé vers ma page GitHub où tous mes projets personels publiques sont hebergés."),
@@ -51,6 +50,7 @@ $(async () => {
     });
 
     await bootSequenceWait;
+    $('#terminal').show()
 });
 
 async function showBootSequence() {

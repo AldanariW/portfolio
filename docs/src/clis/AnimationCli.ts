@@ -18,14 +18,14 @@ export class AnimationCli extends Cli implements IExecutable {
             {
                 name: 'animation',
                 alias: 'a',
-                description: "The name of the animation",
+                description: "Le nom de l'animation",
                 type: 'string',
                 required: true,
             },
             {
                 name: 'time',
                 alias: 't',
-                description: "The time between animation frames, a lower time means a faster animation",
+                description: "Le temps entre chaque frame de l'animation, un nombre plus petit rendra l'animation plus rapide",
                 type: 'number',
                 required: false,
             }
@@ -41,7 +41,7 @@ export class AnimationCli extends Cli implements IExecutable {
 
     public execute(): {succes: boolean, errors: string} {
         if (this.currentId === undefined) {
-            return {succes: false, errors: 'Animation failed to start, cause: Id is undefined at the time of animation instanciation'}
+            return {succes: false, errors: "Echec du démarage de l'animation, cause : son conteneur n'existe pas"}
         }
         let animName = this.validator.getArg("a") as keyof typeof data;
         try {
@@ -50,7 +50,7 @@ export class AnimationCli extends Cli implements IExecutable {
             animation.start()
             this.animations.set(this.currentId, animation);
         } catch (e) {
-            return {succes: false, errors: 'Animation failed to start, cause: ' + e}
+            return {succes: false, errors: `Echec du démarage de l'animation, cause: ${e}`}
         }
         return {succes: true, errors: ""};
     }
@@ -62,7 +62,7 @@ export class AnimationCli extends Cli implements IExecutable {
         const isHelpCommand = this.validator.getArg('help') !== undefined;
         const animName = this.validator.getArg("a") as string;
         if (!isHelpCommand && !this.availableAnimations.includes(animName)) {
-            return {succes: false, errors: `animation '${animName}' is not a valid animation, type 'anim -help' to see the list of animations.`, follow: false}
+            return {succes: false, errors: `Animation inconnue : '${animName}', tapez 'anim -help' pour voir la liste des annimations`, follow: false}
         }
 
         return {succes: true, errors: "", follow: !isHelpCommand}
