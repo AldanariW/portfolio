@@ -11,13 +11,13 @@
 }
 
 #wrapper {
-    background-color: #000;
+    background-color: black;
     height: 100vh;
 }
 
 body {
-    background-color: #000;
-    color: #fff;
+    background-color: black;
+    color: white;
     font-family: monospace;
     font-size: 16px;
     margin: 0;
@@ -57,7 +57,7 @@ body {
 #command-input {
     background-color: transparent;
     border: none;
-    color: #fff;
+    color: white;
     font-family: monospace;
     font-size: 16px;
     flex-grow: 1;
@@ -83,9 +83,9 @@ body {
 
 .modal-pane {
     position: fixed;
-    top: 50%;
+    top: 20%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translateX(-50%);
     width: 80%;
     max-height: 80vh;
     overflow-y: auto;
@@ -118,54 +118,94 @@ body {
     overflow: hidden;
 }
 
+/* MODAL TABS ELEMENTS */
+.tab-button {
+    padding: 10px;
+    background-color: black;
+    color: white;
+    border: 1px solid white;
+    border-radius: 5px 5px 0 0;
+    border-bottom: none;
+}
+
+.tab-button:hover {
+    background-color: #3f3f3f;
+}
+
+.tab-button.active {
+    background-color: white;
+    color: black;
+}
+
+.tab-content img {
+    height: 90px;
+}
+
+.tab-content img.dark {
+    background-color: #3f3f3f;
+    border-radius: 5px;
+    padding: 0 5px;
+}
 
 /* COMPETENCES TABLE ELEMENTS */
+.tab {
+    border-bottom: 1px solid white;
+}
+
+#competences {
+    width: fit-content;
+    margin: auto;
+}
+
 /* Light colors */
-.lr {
-    color: rgba(var(--red), var(--alpha-light));
-}
-
-.lo {
-    color: rgba(var(--orange), var(--alpha-light));
-}
-
-.ly {
-    color: rgba(var(--yellow), var(--alpha-light));
-}
-
-.lg {
-    color: rgba(var(--green), var(--alpha-light));
-}
-
-.lb {
-    color: rgba(var(--blue), var(--alpha-light));
-}
-
-.lw {
-    color: rgba(var(--white), var(--alpha-light));
-}
+.lr {color: rgba(var(--red), var(--alpha-light));}
+.lo {color: rgba(var(--orange), var(--alpha-light));}
+.ly {color: rgba(var(--yellow), var(--alpha-light));}
+.lg {color: rgba(var(--green), var(--alpha-light));}
+.lb {color: rgba(var(--blue), var(--alpha-light));}
+.lw {color: rgba(var(--white), var(--alpha-light));}
 
 /* Full opacity colors */
-.r {
-    color: rgba(var(--red), var(--alpha-full));
+.r {color: rgba(var(--red), var(--alpha-full));}
+.o {color: rgba(var(--orange), var(--alpha-full));}
+.y {color: rgba(var(--yellow), var(--alpha-full));}
+.g {color: rgba(var(--green), var(--alpha-full));}
+.b {color: rgba(var(--blue), var(--alpha-full));}
+.w {color: rgba(var(--white), var(--alpha-full));}
+
+
+/* TIER LIST ELEMENTS */
+.tier-container {
+    width: 80%;
+    margin: 0 auto;
+}
+.tier-row {
+    display: flex;
+    margin-bottom: 10px;
+    min-height: 100px;
+    border: 1px solid white;
+    border-radius: 5px;
+}
+.tier-label {
+    width: 220px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    border-radius: 5px 0 0 5px;
+    color: black;
+}
+.tier-content {
+    flex-grow: 1;
+    background-color: black;
+    padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    border-radius: 0 5px 5px 0;
 }
 
-.o {
-    color: rgba(var(--orange), var(--alpha-full));
-}
-
-.y {
-    color: rgba(var(--yellow), var(--alpha-full));
-}
-
-.g {
-    color: rgba(var(--green), var(--alpha-full));
-}
-
-.b {
-    color: rgba(var(--blue), var(--alpha-full));
-}
-
-.w {
-    color: rgba(var(--white), var(--alpha-full));
-}
+.s-tier { background-color: #ff7f7f; }
+.a-tier { background-color: #ffbf7f; }
+.b-tier { background-color: #ffff7f; }

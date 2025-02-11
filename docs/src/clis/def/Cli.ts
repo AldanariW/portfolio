@@ -7,7 +7,7 @@ type Callable = (args: ArgMap) => string;
 
 export abstract class Cli {
     protected args: ArgMap;
-    protected readonly validator: ArgValidator | undefined;
+    protected validator: ArgValidator | undefined;
 
     protected constructor(
         public readonly name: string,

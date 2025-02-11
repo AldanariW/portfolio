@@ -11,14 +11,16 @@ const contentDir = "content";
 $(async () => {
 
     const bootSequenceWait = showBootSequence()
+    $('#terminal').show()
 
     const clis: Cli[] = [
-        new RedirectCli("github", "https://github.com/AldanariP", "Just type 'github' to open the github profile in the new tab"),
-        new RedirectCli("mail", "mailto:curylorafael945@gmail.com?body=Je veux vous embaucher !", "Write me an email !"),
+        new RedirectCli("github", "https://github.com/AldanariP", "Pour être redirigé vers ma page GitHub où tous mes projets personels publiques sont hebergés."),
+        new RedirectCli("mail", "mailto:curylorafael945@gmail.com?body=Je veux vous embaucher !", "Pour m'écrire un email"),
+        new RedirectCli("cv", `${contentDir}/cv.pdf`, "Ouvre mon CV dans un nouvel onglet"),
         // new TestCli(),
         // new AnimationCli(),
         // new ContentCli("lorem", "a test modal pane", `${contentDir}/lorem_ipsum.html`),
-        new ContentCli("competences", "Mes competences acquisent lors de mon B.U.T. Informatique", `${contentDir}/competences_pn.html`),
+        new ContentCli("competences", `${contentDir}/competences.html`, "Affiche mes differentes compétences")
     ];
 
     clis.push(new CommandListCli(clis));
@@ -56,13 +58,13 @@ async function showBootSequence() {
         const delays: number[] = [];
         let burstMode = false;
         let burstCount = 0;
-        const normalMin= 100
-        const normalMax= 400
-        const burstMin= 10
-        const burstMax= 60
-        const burstChance= 0.3
-        const extraDelayChance= 0.2
-        const extraDelayMax= 500
+        const normalMin = 100
+        const normalMax = 400
+        const burstMin = 10
+        const burstMax = 60
+        const burstChance = 0.3
+        const extraDelayChance = 0.2
+        const extraDelayMax = 500
 
         for (let i = 0; i < numberOfLines; i++) {
             if (!burstMode && Math.random() < burstChance) {
@@ -89,7 +91,7 @@ async function showBootSequence() {
     const delays = generateBootDelays(bootsequence.length);
 
     for (let i = 0; i < bootsequence.length; i++) {
-        bootDiv.append(`${bootsequence[i].length > 1 ? '[ <span style="color: lime">OK</span> ]' : ''} ${bootsequence[i]}<br>`);
+        bootDiv.append(`${bootsequence[i].length > 1 ? '[ <span style="color: #0f0">OK</span> ]' : ''} ${bootsequence[i]}<br>`);
         await new Promise(resolve => setTimeout(resolve, delays[i]));
     }
 
@@ -100,7 +102,5 @@ async function showBootSequence() {
         nameDiv.append(`<pre>${name[i]}</pre>`);
         await new Promise(resolve => setTimeout(resolve, delays[i]));
     }
-
-    $('#terminal').show()
 }
 

@@ -12,26 +12,18 @@
     ````shell
    npm install --save-dev
    ````
-4. [*Optional*] Change the build mode from ``production`` to ``developement`` in ``./docs/webpack.config.js`` for easier debugging
-   ```js
-   module.exports = {
-   // ...
-   mode: "production" // => mode: "developpement"
-   }
-   ```
-
-5. Build the project (essentially compile the TypeScript files)
+4. Build the project (essentially compile the TypeScript files)
    ````shell
    npm run build
    ````
    
-6. Expose the ``index.html`` file with you're prefered web server
+5. Expose the ``index.html`` file with you're prefered web server
    ````shell
    # Example with npx@http-server
    cd docs
    npx -y http-server
    ````
-7. Go to ``localhost`` and enjoy :)
+6. Go to ``localhost`` and enjoy :)
 
 
 # Roadmap
@@ -42,3 +34,5 @@
 - [ ] Table content rendering
 - [ ] Icons
 - [ ] Autocompletion
+- [ ] Language support
+- [ ] Command history persist between refreshs

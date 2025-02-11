@@ -1,4 +1,5 @@
 import {Cli} from './def/Cli';
+import {ArgValidator} from "./def/ArgValidator";
 
 let $pane: JQuery
 let $modal: JQuery
@@ -13,9 +14,10 @@ $(() => {
 export class ContentCli extends Cli {
     private readonly content: string;
 
-    constructor(name: string, desc: string, content: string) {
+    constructor(name: string, content: string, desc: string, validator?: ArgValidator) {
         super(name, desc, () => `Showing ${name}...`);
         this.content = content;
+        this.validator = validator;
     }
 
     public execute(): {succes: boolean, errors: string} {
